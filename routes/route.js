@@ -43,17 +43,24 @@ router.get('/filtered',async (req, res) =>{
     try {
         let destination = req.query.destination;
         let sort = req.query.sort
+       
         if(sort && destination){
             let plans = await Plan.find({destination : destination}).sort({budget : (sort== "asc")? 1: 0})
-            return res.status(201).send({msg : "Plan Deleted Successfully", isOk : true, plans : plans})
+            
+            return res.status(201).send({msg : "Plans Fected Successfully", isOk : true, plans : plans})
         }
         else if(sort){
             let plans = await Plan.find().sort({budget : (sort== "asc")? 1: 0})
-            return res.status(201).send({msg : "Plan Deleted Successfully", isOk : true, plans : plans})
+            
+            return res.status(201).send({msg : "Plans Fected Successfully", isOk : true, plans : plans})
+        }
+        else if(destination){
+            let plans = await Plan.find({destination : destination})
+            return res.status(201).send({msg : "Plans Fected Successfully", isOk : true, plans : plans})
         }
         else{
-            let plans = await Plan.find({destination : destination})
-            return res.status(201).send({msg : "Plan Deleted Successfully", isOk : true, plans : plans})
+            let plans = await Plan.find()
+            return res.status(201).send({msg : "Plans Fected Successfully", isOk : true, plans : plans})
         }
     } catch (error) {
         console.log(error)
